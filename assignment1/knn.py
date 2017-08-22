@@ -1,6 +1,7 @@
 
 # coding: utf-8
 
+from __future__ import print_function
 # # k-Nearest Neighbor (kNN) exercise
 # 
 # *Complete and hand in this completed worksheet (including its outputs and any supporting code outside of the worksheet) with your assignment submission. For more details see the [assignments page](http://vision.stanford.edu/teaching/cs231n/assignments.html) on the course website.*
@@ -17,16 +18,11 @@
 
 # Run some setup code for this notebook.
 import sys
-import pprint
-pprint.pprint(sys.path)
-
-get_ipython().magic('matplotlib inline')
 import random
 import numpy as np
 from cs231n.data_utils import load_CIFAR10
 import matplotlib.pyplot as plt
 
-from __future__ import print_function
 
 # This is a bit of magic to make matplotlib figures appear inline in the notebook
 # rather than in a new window.
@@ -37,11 +33,6 @@ plt.rcParams['image.cmap'] = 'gray'
 
 # Some more magic so that the notebook will reload external python modules;
 # see http://stackoverflow.com/questions/1907993/autoreload-of-modules-in-ipython
-get_ipython().magic('load_ext autoreload')
-get_ipython().magic('autoreload 2')
-
-
-# In[ ]:
 
 # Load the raw CIFAR-10 data.
 cifar10_dir = 'cs231n/datasets/cifar-10-batches-py'
@@ -61,6 +52,8 @@ print('Test labels shape: ', y_test.shape)
 classes = ['plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck']
 num_classes = len(classes)
 samples_per_class = 7
+
+'''
 for y, cls in enumerate(classes):
     idxs = np.flatnonzero(y_train == y)
     idxs = np.random.choice(idxs, samples_per_class, replace=False)
@@ -72,7 +65,7 @@ for y, cls in enumerate(classes):
         if i == 0:
             plt.title(cls)
 plt.show()
-
+'''
 
 # In[ ]:
 
@@ -86,9 +79,6 @@ num_test = 500
 mask = list(range(num_test))
 X_test = X_test[mask]
 y_test = y_test[mask]
-
-
-# In[ ]:
 
 # Reshape the image data into rows
 X_train = np.reshape(X_train, (X_train.shape[0], -1))
@@ -130,8 +120,8 @@ print(dists.shape)
 
 # We can visualize the distance matrix: each row is a single test example and
 # its distances to training examples
-plt.imshow(dists, interpolation='none')
-plt.show()
+# plt.imshow(dists, interpolation='none')
+# plt.show()
 
 
 # **Inline Question #1:** Notice the structured patterns in the distance matrix, where some rows or columns are visible brighter. (Note that with the default color scheme black indicates low distances while white indicates high distances.)
@@ -153,6 +143,7 @@ y_test_pred = classifier.predict_labels(dists, k=1)
 num_correct = np.sum(y_test_pred == y_test)
 accuracy = float(num_correct) / num_test
 print('Got %d / %d correct => accuracy: %f' % (num_correct, num_test, accuracy))
+
 
 
 # You should expect to see approximately `27%` accuracy. Now lets try out a larger `k`, say `k = 5`:

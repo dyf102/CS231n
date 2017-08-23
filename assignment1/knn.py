@@ -172,7 +172,7 @@ dists_one = classifier.compute_distances_one_loop(X_test)
 # root of the squared sum of differences of all elements; in other words, reshape
 # the matrices into vectors and compute the Euclidean distance between them.
 difference = np.linalg.norm(dists - dists_one, ord='fro')
-print('Difference was: %f' % (difference, ))
+print('1. Difference was: %f' % (difference, ))
 if difference < 0.001:
     print('Good! The distance matrices are the same')
 else:
@@ -187,7 +187,7 @@ dists_two = classifier.compute_distances_no_loops(X_test)
 
 # check that the distance matrix agrees with the one we computed before:
 difference = np.linalg.norm(dists - dists_two, ord='fro')
-print('Difference was: %f' % (difference, ))
+print('2. Difference was: %f' % (difference, ))
 if difference < 0.001:
     print('Good! The distance matrices are the same')
 else:

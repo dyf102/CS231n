@@ -1,0 +1,72 @@
+Timer unit: 1e-06 s
+
+Total time: 57.2203 s
+Function: compute_distances_two_loops at line 52
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    52                                               @profile
+    53                                               def compute_distances_two_loops(self, X):
+    54                                                   """
+    55                                                   Compute the distance between each test point in X and each training point
+    56                                                   in self.X_train using a nested loop over both the training data and the
+    57                                                   test data.
+    58                                           
+    59                                                   Inputs:
+    60                                                   - X: A numpy array of shape (num_test, D) containing test data.
+    61                                           
+    62                                                   Returns:
+    63                                                   - dists: A numpy array of shape (num_test, num_train) where dists[i, j]
+    64                                                     is the Euclidean distance between the ith test point and the jth training
+    65                                                     point.
+    66                                                   """
+    67         2            6      3.0      0.0          num_test = X.shape[0]
+    68         2            2      1.0      0.0          num_train = self.X_train.shape[0]
+    69         2         2821   1410.5      0.0          dists = np.zeros((num_test, num_train))
+    70      1002          418      0.4      0.0          for i in xrange(num_test):
+    71   5001000      1797141      0.4      3.1              for j in xrange(num_train):
+    72                                                           #####################################################################
+    73                                                           # TODO:                                                             #
+    74                                                           # Compute the l2 distance between the ith test point and the jth    #
+    75                                                           # training point, and store the result in dists[i, j]. You should   #
+    76                                                           # not use a loop over dimension.                                    #
+    77                                                           #####################################################################
+    78   5000000     14678248      2.9     25.7                  diff = (X[i] - self.X_train[j])
+    79                                                           # dists[i][j] = np.sqrt(np.sum(diff ** 2))
+    80   5000000     40741698      8.1     71.2                  dists[i][j] = np.linalg.norm(diff)
+    81                                                           #####################################################################
+    82                                                           #                       END OF YOUR CODE                            #
+    83                                                           #####################################################################
+    84         2            0      0.0      0.0          return dists
+
+Total time: 50.6134 s
+Function: compute_distances_one_loop at line 86
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    86                                               @profile
+    87                                               def compute_distances_one_loop(self, X):
+    88                                                   """
+    89                                                   Compute the distance between each test point in X and each training point
+    90                                                   in self.X_train using a single loop over the test data.
+    91                                           
+    92                                                   Input / Output: Same as compute_distances_two_loops
+    93                                                   """
+    94         2            3      1.5      0.0          num_test = X.shape[0]
+    95         2            1      0.5      0.0          num_train = self.X_train.shape[0]
+    96         2         2548   1274.0      0.0          dists = np.zeros((num_test, num_train))
+    97      1002         2229      2.2      0.0          for i in xrange(num_test):
+    98                                                       #######################################################################
+    99                                                       # TODO:                                                               #
+   100                                                       # Compute the l2 distance between the ith test point and all training #
+   101                                                       # points, and store the result in dists[i, :].                        #
+   102                                                       #######################################################################
+   103      1000     22707507  22707.5     44.9              diff = self.X_train - X[i]
+   104      1000     27901074  27901.1     55.1              dists[i] = np.linalg.norm(diff, axis=1)
+   105                                                       # dists[i] = np.sqrt(np.sum((self.X_train - X[i]) ** 2, axis=1))
+   106                                           
+   107                                                       #######################################################################
+   108                                                       #                         END OF YOUR CODE                            #
+   109                                                       #######################################################################
+   110         2            0      0.0      0.0          return dists
+
